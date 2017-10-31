@@ -25,63 +25,121 @@ class Book(object):
 		
 		return info
 
+# List of potential messages.
+welcome = """
+=========================================
+Welcome in your personal library manager.
+========================================= """
+	
+home = """
+What would you like to do?
+Choose one of the following options :
+"""
+
+main_options = """
+1) Find a book.
+2) Add a book.
+3) Modify/remove a book.
+4) See all books.
+5) Quit.
+"""
+
+find_options = """
+Find a book :
+1) by title.
+2) by author.
+3) by date.
+4) All of the above.
+5) Return to main menu.
+"""
+empty = """
+ERROR : Your library is currently empty.
+"""
+	
+added = """
+You added the following book : 
+"""
+
+list_pres = """
+This is all the book(s) contained 
+in your personal library :
+"""
+	
+goodbye = """
+=========================================
+		Goodbye!
+=========================================
+"""
+	
+error = """
+ERROR : This choice is not in the options list.
+"""
+
+# Functions for options.
+# Find a book.
+def find_book(books_list) :
+
+	if len(books_list) == 0 :
+			
+		print(empty)
+			
+	else : 
+	
+		print(find_options)
+		find_choice = eval(input("Your choice : "))
+	
+		if find_choice == 1 :
+				
+			find = input("Author : ")
+			
+		elif find_choice == 2 :
+	
+			print("2")
+				
+		elif find_choice == 5 :
+		
+			return
+					
+		else : 
+				
+			print(error)
+			
+# Add a book.
+def add_book(books_list) :
+
+			temp_author = input("Author : ")
+			temp_title = input("Title : ")
+			temp_year = input("Publication year : ")
+			
+			new_book = Book(temp_author, temp_title, temp_year)
+			books_list.append(new_book)
+			
+			print(added)
+			
+			print(new_book)
+			
+# See all books.
+def see_books :
+
+	if len(books_list) == 0 :
+		
+		print(empty)
+			
+	else : 
+			
+		print(list_pres)
+		
+		for book in books_list :
+				
+			print(book)
+
 
 # Main program.
 def main() :
 	
-	import os.path
-	
+	# Add importation of an existing list.
 	books_list = []
 
-	# List of potential messages.
-	welcome = """
-	=========================================
-	Welcome in your personal library manager.
-	========================================= """
-	
-	home = """
-	What would you like to do?
-	Choose one of the following options :
-	"""
-
-	main_options = """
-	1) Find a book.
-	2) Add a book.
-	3) Modify/remove a book.
-	4) See all books.
-	5) Quit.
-	"""
-
-	find_options = """
-	Find a book :
-	1) by title.
-	2) by author.
-	3) by date.
-	4) All of the above.
-	5) Return to main menu.
-	"""
-	empty = """
-	ERROR : Your library is currently empty.
-	"""
-	
-	added = """
-	You added the following book : 
-	"""
-
-	list_pres = """
-	This is all the book(s) contained 
-	in your personal library :
-	"""
-	
-	goodbye = """
-	=========================================
-			Goodbye!
-	=========================================
-	"""
-	
-	error = """
-	ERROR : This choice is not in the options list.
-	"""
 	
 	print(welcome)
 	
@@ -97,71 +155,30 @@ def main() :
 		# 1) Find a book.
 		if choice == 1 :
 		
-			if len(books_list) == 0 :
-		
-				print(empty)
-			
-			else : 
-		
-				print(find_options)
-	
-				find_choice = eval(input("Your choice : "))
-	
-				if find_choice == 1 :
-			
-					find = input("Author : ")
-			
-			
-				elif find_choice == 2 :
-		
-					print("2")
-				
-				elif find_choice == 5 :
-				
-					continue
-					
-				else : 
-				
-					print(error)
+			find_book(books_list)
+
 	
 		# 2) Add a book.
 		elif choice == 2 :
-	
-			temp_author = input("Author : ")
-			temp_title = input("Title : ")
-			temp_year = input("Publication year : ")
 		
-			new_book = Book(temp_author, temp_title, temp_year)
-		
-			books_list.append(new_book)
-			
-			print(added)
-			
-			print(new_book)
+			add_book(books_list)
 		
 		# 3) Modify/remove a book.
 		elif choice == 3 :
+		
 			print("Work in progress.")
 			
 		# 4) See al books.
 		elif choice == 4 :
 		
-			if len(books_list) == 0 :
-		
-				print(empty)
-			
-			else : 
-			
-				print(list_pres)
-		
-				for book in books_list :
-				
-					print(book)
+			see_books(books_list)
 		
 		# 5) Quit.
 		elif choice == 5 :
 		
 			print(goodbye)
+			
+			# Add choice to save or not modification.
 		
 			end = True
 			
