@@ -159,8 +159,8 @@ def see_books(books_list) :
 			print(book)
 
 # Save books list.
-def save_books() :
-
+def save_books(books_list) :
+	
 	exit = 0
 	
 	while exit is 0:
@@ -230,7 +230,7 @@ def main() :
 		# 5) Quit.
 		elif choice == 5 :
 			
-			save_books()
+			save_books(books_list)
 			
 			end = True
 			
