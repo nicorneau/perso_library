@@ -28,7 +28,7 @@ class Book(object):
 # List of potential messages.
 welcome = """
 =========================================
-Welcome in your personal library manager.
+Welcome to your personal library manager.
 ========================================= """
 	
 home = """
