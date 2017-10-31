@@ -1,7 +1,5 @@
 # README
 
-***
-
 Nicolas Corneau-Tremblay
 
 This repo contains my first project in Python : an information manager (classic!).
