@@ -5,6 +5,9 @@ This is a program to keep track of a personal library.
 @sdate : 27/10/17
 """
 
+import os
+import pickle
+
 # Book class.
 class Book(object):
 	"""
@@ -64,7 +67,13 @@ list_pres = """
 This is all the book(s) contained 
 in your personal library :
 """
-	
+
+save = """
+Would you like to save your modification(s)?
+1) Yes.
+2) No.
+"""
+
 goodbye = """
 =========================================
 		Goodbye!
@@ -75,7 +84,23 @@ error = """
 ERROR : This choice is not in the options list.
 """
 
-# Functions for options.
+# Functions for main program.
+#import books_list.
+def import_books() :
+	
+	if os.path.isfile("books_list.pickle") and os.path.getsize("books_list.pickle") > 0 :
+	
+		books_list_in = open("books_list.pickle", "rb")
+		books_list = pickle.load(books_list_in)
+		books_list_in.close()
+
+	else :
+	
+		books_list = [] 
+		
+	return books_list
+		 
+
 # Find a book.
 def find_book(books_list) :
 
@@ -119,7 +144,7 @@ def add_book(books_list) :
 			print(new_book)
 			
 # See all books.
-def see_books :
+def see_books(books_list) :
 
 	if len(books_list) == 0 :
 		
@@ -133,13 +158,41 @@ def see_books :
 				
 			print(book)
 
+# Save books list.
+def save_books() :
+
+	exit = 0
+	
+	while exit is 0:
+	
+		print(save)
+		save_choice = input("Your choice : ")
+		
+		if save_choice is "1" :
+			
+			books_list_out = open("books_list.pickle", "wb")
+			pickle.dump(books_list, books_list_out)
+			books_list_out.close()
+			
+			print("Modifications saved.")
+			
+			exit = 1
+			
+		elif save_choice is "2" :
+			
+			exit = 1
+		
+		else :
+	
+			print(error)
+	
+	print(goodbye)
 
 # Main program.
 def main() :
 	
-	# Add importation of an existing list.
-	books_list = []
-
+	# Import an existing list or create an empty one if none is found.
+	books_list = import_books()
 	
 	print(welcome)
 	
@@ -167,6 +220,7 @@ def main() :
 		elif choice == 3 :
 		
 			print("Work in progress.")
+			# Add option empty books list.
 			
 		# 4) See al books.
 		elif choice == 4 :
@@ -175,11 +229,9 @@ def main() :
 		
 		# 5) Quit.
 		elif choice == 5 :
-		
-			print(goodbye)
 			
-			# Add choice to save or not modification.
-		
+			save_books()
+			
 			end = True
 			
 		# Other inputs.
@@ -187,6 +239,7 @@ def main() :
 		
 			print(error)	
 	
+# Run main program.
 if __name__ == "__main__" :
 	main()
 	
