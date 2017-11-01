@@ -11,7 +11,7 @@ import pickle
 # Book class.
 class Book(object):
 	"""
-	This is a class defining a book by its author, its title and its publication year.
+	This class defines a book by its author, its title and its publication year.
 	"""
 	
 	# Constructor.
@@ -23,6 +23,18 @@ class Book(object):
 		self.year = year
 	
 	# Methods.
+	def get_author(self) :
+	
+		return self.author
+		
+	def get_title(self) :
+	
+		return self.title
+		
+	def get_year(self) :
+	
+			return self.year
+		
 	def __str__(self) :
 		info = "%s (%s) - %s" % (self.author, self.year, self.title)
 		
@@ -49,9 +61,9 @@ main_options = """
 
 find_options = """
 Find a book :
-1) by title.
-2) by author.
-3) by date.
+1) by author.
+2) by title.
+3) by year.
 4) All of the above.
 5) Return to main menu.
 """
@@ -81,12 +93,15 @@ goodbye = """
 """
 	
 error = """
-ERROR : This choice is not in the options list.
+ERROR : This choice is not one of available options.
 """
 
 # Functions for main program.
 #import books_list.
 def import_books() :
+	"""
+	This function import existing books list or create one if none is found.
+	"""
 	
 	if os.path.isfile("books_list.pickle") and os.path.getsize("books_list.pickle") > 0 :
 	
@@ -103,48 +118,88 @@ def import_books() :
 
 # Find a book.
 def find_book(books_list) :
+	"""
+	This function searchs book(s) in books list.
+	"""
 
 	if len(books_list) == 0 :
 			
 		print(empty)
 			
 	else : 
-	
-		print(find_options)
-		find_choice = eval(input("Your choice : "))
-	
-		if find_choice == 1 :
-				
-			find = input("Author : ")
-			
-		elif find_choice == 2 :
-	
-			print("2")
-				
-		elif find_choice == 5 :
 		
-			return
-					
-		else : 
+		exit = 0
+		
+		while exit == 0 :
+		
+			print(find_options)
+			find_choice = eval(input("Your choice : "))
+	
+			if find_choice == 1 :
 				
-			print(error)
+				find = input("Author : ")
+				
+				for book in books_list :
+					if find in book.get_author() :
+						print(book)
+						
+			
+			elif find_choice == 2 :
+	
+				find = input("Title : ")
+				
+				for book in books_list :
+					if find in book.get_title() :
+						print(book)
+						
+			elif find_choice == 3 :
+			
+				find = input("Publication year : ")
+				
+				for book in books_list :
+					if find in book.get_year() :
+						print(book)
+								
+			elif find_choice == 4 :
+			
+				find = input("Search : ")
+				
+				for book in books_list :
+					
+					temp = book.__str__()
+					if find in temp :
+						print(book)
+				
+			elif find_choice == 5 :
+		
+				exit = 1
+					
+			else : 
+				
+				print(error)
 			
 # Add a book.
 def add_book(books_list) :
+	"""
+	THis function adds a book to books list.
+	"""
 
-			temp_author = input("Author : ")
-			temp_title = input("Title : ")
-			temp_year = input("Publication year : ")
+	temp_author = input("Author : ")
+	temp_title = input("Title : ")
+	temp_year = input("Publication year : ")
 			
-			new_book = Book(temp_author, temp_title, temp_year)
-			books_list.append(new_book)
+	new_book = Book(temp_author, temp_title, temp_year)
+	books_list.append(new_book)
 			
-			print(added)
+	print(added)
 			
-			print(new_book)
+	print(new_book)
 			
 # See all books.
 def see_books(books_list) :
+	"""
+	This function displays all books contained in books list.
+	"""
 
 	if len(books_list) == 0 :
 		
@@ -160,15 +215,18 @@ def see_books(books_list) :
 
 # Save books list.
 def save_books(books_list) :
+	"""
+	This function saves modification to books list.
+	"""
 	
 	exit = 0
 	
 	while exit is 0:
 	
 		print(save)
-		save_choice = input("Your choice : ")
+		save_choice = eval(input("Your choice : "))
 		
-		if save_choice is "1" :
+		if save_choice == 1 :
 			
 			books_list_out = open("books_list.pickle", "wb")
 			pickle.dump(books_list, books_list_out)
@@ -178,7 +236,7 @@ def save_books(books_list) :
 			
 			exit = 1
 			
-		elif save_choice is "2" :
+		elif save_choice == 2 :
 			
 			exit = 1
 		
@@ -190,6 +248,9 @@ def save_books(books_list) :
 
 # Main program.
 def main() :
+	"""
+	This function is the main program of the personal library manager.
+	"""
 	
 	# Import an existing list or create an empty one if none is found.
 	books_list = import_books()
