@@ -75,6 +75,15 @@ added = """
 You added the following book : 
 """
 
+no_match = """
+There are no results that match your search.
+"""
+
+mod_options = """
+1) Modify the book.
+2) Remove the book.
+"""
+
 list_pres = """
 This is all the book(s) contained 
 in your personal library :
@@ -128,10 +137,12 @@ def find_book(books_list) :
 			
 	else : 
 		
+		books_select = []
+		
 		exit = 0
 		
 		while exit == 0 :
-		
+			
 			print(find_options)
 			find_choice = eval(input("Your choice : "))
 	
@@ -139,36 +150,83 @@ def find_book(books_list) :
 				
 				find = input("Author : ")
 				
+				round = 1
+				
 				for book in books_list :
+				
 					if find in book.get_author() :
-						print(book)
 						
-			
+						books_select.append(book)
+						print(round, ") ", book, sep = "")
+						round += 1
+
+				if len(books_select) == 0 :
+				
+					print(no_match)
+											
+				exit = 1
+				
 			elif find_choice == 2 :
 	
 				find = input("Title : ")
 				
+				round = 1
+				
 				for book in books_list :
+				
 					if find in book.get_title() :
-						print(book)
 						
+						books_select.append(book)
+						print(round, ") ", book, sep = "")
+						round += 1
+
+				if len(books_select) == 0 :
+				
+					print(no_match)
+											
+				exit = 1
+				
 			elif find_choice == 3 :
 			
 				find = input("Publication year : ")
 				
+				round = 1
+				
 				for book in books_list :
+				
 					if find in book.get_year() :
-						print(book)
-								
+					
+						books_select.append(book)
+						print(round, ") ", book, sep = "")
+						round += 1
+						
+				if len(books_select) == 0 :
+				
+					print(no_match)
+									
+				exit = 1	
+					
 			elif find_choice == 4 :
 			
 				find = input("Search : ")
 				
+				round = 1
+				
 				for book in books_list :
 					
 					temp = book.__str__()
+					
 					if find in temp :
-						print(book)
+						
+						books_select.append(book)
+						print(round, ") ", book, sep = "")
+						round += 1
+				
+				if len(books_select) == 0 :
+				
+					print(no_match)
+					
+				exit = 1
 				
 			elif find_choice == 5 :
 		
@@ -177,6 +235,8 @@ def find_book(books_list) :
 			else : 
 				
 				print(error)
+		
+		return books_select
 			
 # Add a book.
 def add_book(books_list) :
@@ -189,12 +249,57 @@ def add_book(books_list) :
 	temp_year = input("Publication year : ")
 			
 	new_book = Book(temp_author, temp_title, temp_year)
-	books_list.append(new_book)
+	
+	return new_book
+
+# Modify/remove a book
+def mod_book(books_list) :
+	"""
+	This function modify/remove a book in books list.
+	"""
+
+	if len(books_list) == 0 :
 			
-	print(added)
+		print(empty)
 			
-	print(new_book)
+	else : 
+		
+		books_to_mod = find_book(books_list)
+		
+		if len(books_to_mod) == 0 :
+		
+			pass
 			
+		else :
+		
+			if len(books_to_mod) == 1 :
+		
+				print("What would your like to do with this book?")
+				print(mod_options)
+				mod_choice = eval(input("Your choice : "))
+				
+			if mod_choice == 1 :
+					
+				print("Add new informations :")
+				rep_book = add_book(books_list)
+				
+				round = 0	
+				for book in books_list :
+						
+					if book.__str__() == books_to_mod[0].__str__() :
+						books_list[round] = books_to_mod[0]
+						round += 1
+				
+				for book in books_list :
+				
+					print(book)
+					
+			else :
+			
+				print("Which of the previous book would you like to modify/remove?")
+			
+				mod_choice = input("Your choice : ")
+		
 # See all books.
 def see_books(books_list) :
 	"""
@@ -275,13 +380,17 @@ def main() :
 		# 2) Add a book.
 		elif choice == 2 :
 		
-			add_book(books_list)
+			new_book = add_book(books_list)
+			
+			books_list.append(new_book)
+			print(added)
+			print(new_book)
 		
 		# 3) Modify/remove a book.
 		elif choice == 3 :
 		
-			print("Work in progress.")
 			# Add option empty books list.
+			mod_book(books_list)
 			
 		# 4) See al books.
 		elif choice == 4 :
