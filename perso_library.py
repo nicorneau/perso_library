@@ -287,18 +287,17 @@ def mod_book(books_list) :
 				for book in books_list :
 						
 					if book.__str__() == books_to_mod[0].__str__() :
-						books_list[round] = books_to_mod[0]
-						round += 1
-				
-				for book in books_list :
-				
-					print(book)
+						
+						print("yep")
+						books_list[round] = rep_book
 					
 			else :
 			
 				print("Which of the previous book would you like to modify/remove?")
 			
 				mod_choice = input("Your choice : ")
+		
+		return books_list
 		
 # See all books.
 def see_books(books_list) :
