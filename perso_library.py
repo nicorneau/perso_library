@@ -59,14 +59,10 @@ main_options = """
 5) Quit.
 """
 
-find_options = """
-Find a book :
-1) by author.
-2) by title.
-3) by year.
-4) All of the above.
-5) Return to main menu.
+search = """
+Enter the author's name, the title or the publication date of the book you are looking for.
 """
+
 empty = """
 ERROR : Your library is currently empty.
 """
@@ -106,7 +102,7 @@ ERROR : This choice is not one of available options.
 """
 
 # Functions for main program.
-#import books_list.
+# Import books_list.
 def import_books() :
 	"""
 	This function import existing books list or create one if none is found.
@@ -131,10 +127,51 @@ def find_book(books_list) :
 	This function searchs book(s) in books list.
 	"""
 
+	# Empty books list.
 	if len(books_list) == 0 :
 			
 		print(empty)
+	
+	# Non-empty books list.
+	else : 
+		
+		books_select = []
+		
+		print(search)
+		find = input("Search for : ")
+				
+		round = 1
+				
+		for book in books_list :
+					
+			temp = book.__str__()
+					
+			if find in temp :
+						
+				books_select.append(book)
+				print(round, ") ", book, sep = "")
+				round += 1
+		
+		return books_select
+				
+		if len(books_select) == 0 :
+				
+			print(no_match)
+		
+
+		
+"""
+def find_book(books_list) :
+	"""
+	#This function searchs book(s) in books list.
+"""
+	
+	# Empty books list.
+	if len(books_list) == 0 :
 			
+		print(empty)
+	
+	# Non-empty books list.
 	else : 
 		
 		books_select = []
@@ -145,7 +182,8 @@ def find_book(books_list) :
 			
 			print(find_options)
 			find_choice = eval(input("Your choice : "))
-	
+			
+			# Find by author.
 			if find_choice == 1 :
 				
 				find = input("Author : ")
@@ -165,7 +203,8 @@ def find_book(books_list) :
 					print(no_match)
 											
 				exit = 1
-				
+			
+			# Find by title.
 			elif find_choice == 2 :
 	
 				find = input("Title : ")
@@ -185,7 +224,8 @@ def find_book(books_list) :
 					print(no_match)
 											
 				exit = 1
-				
+			
+			# Fond by publication year.
 			elif find_choice == 3 :
 			
 				find = input("Publication year : ")
@@ -205,7 +245,8 @@ def find_book(books_list) :
 					print(no_match)
 									
 				exit = 1	
-					
+			
+			# Find by everything above.		
 			elif find_choice == 4 :
 			
 				find = input("Search : ")
@@ -227,17 +268,20 @@ def find_book(books_list) :
 					print(no_match)
 					
 				exit = 1
-				
+			
+			# Quit.
 			elif find_choice == 5 :
 		
 				exit = 1
-					
+			
+			# Error.		
 			else : 
 				
 				print(error)
 		
 		return books_select
-			
+"""
+
 # Add a book.
 def add_book(books_list) :
 	"""
@@ -266,37 +310,61 @@ def mod_book(books_list) :
 		
 		books_to_mod = find_book(books_list)
 		
+		# Empty books list to modify.
 		if len(books_to_mod) == 0 :
 		
 			pass
-			
-		else :
 		
+		#Non-empty books list to modify.
+		else :
+			
+			# Books list to modify of length equals to one.
 			if len(books_to_mod) == 1 :
 		
 				print("What would your like to do with this book?")
 				print(mod_options)
 				mod_choice = eval(input("Your choice : "))
 				
-			if mod_choice == 1 :
+				# Modify.
+				if mod_choice == 1 :
 					
-				print("Add new informations :")
-				rep_book = add_book(books_list)
+					print("Add new informations :")
+					rep_book = add_book(books_list)
 				
-				round = 0	
-				for book in books_list :
+					round = 0	
+					for book in books_list :
 						
-					if book.__str__() == books_to_mod[0].__str__() :
+						if book.__str__() == books_to_mod[0].__str__() :
 						
-						print("yep")
-						books_list[round] = rep_book
+							books_list[round] = rep_book
+						
+					print("The book has been correctly modified")
+				
+				# Delete.
+				elif mod_choice == 2 :
 					
+					round = 0	
+					for book in books_list :
+						
+						if book.__str__() == books_to_mod[0].__str__() :
+						
+							del books_list[round]
+							
+					print("The book has been correctly deleted")
+							
+				# Error
+				else :
+					
+					print(error)
+			
+			# Books list to modify of length greater to one.
 			else :
 			
 				print("Which of the previous book would you like to modify/remove?")
 			
 				mod_choice = input("Your choice : ")
-		
+			
+				
 		return books_list
 		
 # See all books.
