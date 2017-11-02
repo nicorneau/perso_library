@@ -1,28 +1,28 @@
 """
-perso_library.py
-This is a program to keep track of a personal library.
-@author : Nicolas Corneau-Tremblay
-@sdate : 27/10/17
+Name : perso_library.py
+Description : This is a program to keep track of a personal library.
+Author : Nicolas Corneau-Tremblay
+Date : 27/10/17
 """
 
 import os
 import pickle
 
-# Book class.
+# Book class
 class Book(object):
 	"""
 	This class defines a book by its author, its title and its publication year.
 	"""
 	
-	# Constructor.
+	# Constructor
 	def __init__(self, author,title, year) :
 		
-		# Attributes.
+		# Attributes
 		self.author = author
 		self.title = title
 		self.year = year
 	
-	# Methods.
+	# Methods
 	def get_author(self) :
 	
 		return self.author
@@ -40,7 +40,7 @@ class Book(object):
 		
 		return info
 
-# List of potential messages.
+# List of potential messages
 welcome = """
 =========================================
 Welcome to your personal library manager.
@@ -52,15 +52,15 @@ Choose one of the following options :
 """
 
 main_options = """
-1) Find a book.
-2) Add a book.
-3) Modify/remove a book.
-4) See all books.
-5) Quit.
+1) Find a book
+2) Add a book
+3) Modify/remove a book
+4) See all books
+5) Quit
 """
 
 search = """
-Enter the author's name, the title or the publication date of the book you are looking for.
+Enter author's name, title or publication date of the book you are looking for.
 """
 
 empty = """
@@ -76,8 +76,8 @@ There are no results that match your search.
 """
 
 mod_options = """
-1) Modify the book.
-2) Remove the book.
+1) Modify the book
+2) Remove the book
 """
 
 list_pres = """
@@ -87,8 +87,8 @@ in your personal library :
 
 save = """
 Would you like to save your modification(s)?
-1) Yes.
-2) No.
+1) Yes
+2) No
 """
 
 goodbye = """
@@ -101,14 +101,15 @@ error = """
 ERROR : This choice is not one of available options.
 """
 
-# Functions for main program.
-# Import books_list.
+# Functions for main program
+# Import books_list
 def import_books() :
 	"""
 	This function import existing books list or create one if none is found.
 	"""
 	
-	if os.path.isfile("books_list.pickle") and os.path.getsize("books_list.pickle") > 0 :
+	if os.path.isfile("books_list.pickle") \
+	and os.path.getsize("books_list.pickle") > 0 :
 	
 		books_list_in = open("books_list.pickle", "rb")
 		books_list = pickle.load(books_list_in)
@@ -121,18 +122,18 @@ def import_books() :
 	return books_list
 		 
 
-# Find a book.
+# Find a book
 def find_book(books_list) :
 	"""
 	This function searchs book(s) in books list.
 	"""
 
-	# Empty books list.
+	# Empty books list
 	if len(books_list) == 0 :
 			
 		print(empty)
 	
-	# Non-empty books list.
+	# Non-empty books list
 	else : 
 		
 		books_select = []
@@ -151,138 +152,15 @@ def find_book(books_list) :
 				books_select.append(book)
 				print(round, ") ", book, sep = "")
 				round += 1
-		
-		return books_select
 				
 		if len(books_select) == 0 :
 				
 			print(no_match)
-		
-
-		
-"""
-def find_book(books_list) :
-	"""
-	#This function searchs book(s) in books list.
-"""
-	
-	# Empty books list.
-	if len(books_list) == 0 :
 			
-		print(empty)
-	
-	# Non-empty books list.
-	else : 
-		
-		books_select = []
-		
-		exit = 0
-		
-		while exit == 0 :
-			
-			print(find_options)
-			find_choice = eval(input("Your choice : "))
-			
-			# Find by author.
-			if find_choice == 1 :
-				
-				find = input("Author : ")
-				
-				round = 1
-				
-				for book in books_list :
-				
-					if find in book.get_author() :
-						
-						books_select.append(book)
-						print(round, ") ", book, sep = "")
-						round += 1
-
-				if len(books_select) == 0 :
-				
-					print(no_match)
-											
-				exit = 1
-			
-			# Find by title.
-			elif find_choice == 2 :
-	
-				find = input("Title : ")
-				
-				round = 1
-				
-				for book in books_list :
-				
-					if find in book.get_title() :
-						
-						books_select.append(book)
-						print(round, ") ", book, sep = "")
-						round += 1
-
-				if len(books_select) == 0 :
-				
-					print(no_match)
-											
-				exit = 1
-			
-			# Fond by publication year.
-			elif find_choice == 3 :
-			
-				find = input("Publication year : ")
-				
-				round = 1
-				
-				for book in books_list :
-				
-					if find in book.get_year() :
-					
-						books_select.append(book)
-						print(round, ") ", book, sep = "")
-						round += 1
-						
-				if len(books_select) == 0 :
-				
-					print(no_match)
-									
-				exit = 1	
-			
-			# Find by everything above.		
-			elif find_choice == 4 :
-			
-				find = input("Search : ")
-				
-				round = 1
-				
-				for book in books_list :
-					
-					temp = book.__str__()
-					
-					if find in temp :
-						
-						books_select.append(book)
-						print(round, ") ", book, sep = "")
-						round += 1
-				
-				if len(books_select) == 0 :
-				
-					print(no_match)
-					
-				exit = 1
-			
-			# Quit.
-			elif find_choice == 5 :
-		
-				exit = 1
-			
-			# Error.		
-			else : 
-				
-				print(error)
-		
 		return books_select
-"""
 
-# Add a book.
+
+# Add a book
 def add_book(books_list) :
 	"""
 	THis function adds a book to books list.
@@ -310,22 +188,22 @@ def mod_book(books_list) :
 		
 		books_to_mod = find_book(books_list)
 		
-		# Empty books list to modify.
+		# Empty books list to modify
 		if len(books_to_mod) == 0 :
 		
 			pass
 		
-		#Non-empty books list to modify.
+		#Non-empty books list to modify
 		else :
 			
-			# Books list to modify of length equals to one.
+			# Books list to modify of length equals to one
 			if len(books_to_mod) == 1 :
 		
 				print("What would your like to do with this book?")
 				print(mod_options)
 				mod_choice = eval(input("Your choice : "))
 				
-				# Modify.
+				# Modify
 				if mod_choice == 1 :
 					
 					print("Add new informations :")
@@ -338,9 +216,9 @@ def mod_book(books_list) :
 						
 							books_list[round] = rep_book
 						
-					print("The book has been correctly modified")
+					print("The book has been correctly modified.")
 				
-				# Delete.
+				# Delete
 				elif mod_choice == 2 :
 					
 					round = 0	
@@ -350,24 +228,23 @@ def mod_book(books_list) :
 						
 							del books_list[round]
 							
-					print("The book has been correctly deleted")
+					print("The book has been correctly deleted.")
 							
 				# Error
 				else :
 					
 					print(error)
 			
-			# Books list to modify of length greater to one.
+			# Books list to modify of length greater to one
 			else :
 			
 				print("Which of the previous book would you like to modify/remove?")
 			
 				mod_choice = input("Your choice : ")
 			
-				
 		return books_list
 		
-# See all books.
+# See all books
 def see_books(books_list) :
 	"""
 	This function displays all books contained in books list.
@@ -385,7 +262,7 @@ def see_books(books_list) :
 				
 			print(book)
 
-# Save books list.
+# Save books list
 def save_books(books_list) :
 	"""
 	This function saves modification to books list.
@@ -418,7 +295,7 @@ def save_books(books_list) :
 	
 	print(goodbye)
 
-# Main program.
+# Main program
 def main() :
 	"""
 	This function is the main program of the personal library manager.
@@ -438,13 +315,13 @@ def main() :
 	
 		choice = eval(input("Your choice : "))
 	
-		# 1) Find a book.
+		# 1) Find a book
 		if choice == 1 :
 		
 			find_book(books_list)
 
 	
-		# 2) Add a book.
+		# 2) Add a book
 		elif choice == 2 :
 		
 			new_book = add_book(books_list)
@@ -453,30 +330,30 @@ def main() :
 			print(added)
 			print(new_book)
 		
-		# 3) Modify/remove a book.
+		# 3) Modify/remove a book
 		elif choice == 3 :
 		
-			# Add option empty books list.
+			# Add option empty books list
 			mod_book(books_list)
 			
-		# 4) See al books.
+		# 4) See all books
 		elif choice == 4 :
 		
 			see_books(books_list)
 		
-		# 5) Quit.
+		# 5) Quit
 		elif choice == 5 :
 			
 			save_books(books_list)
 			
 			end = True
 			
-		# Other inputs.
+		# Other inputs
 		else :
 		
 			print(error)	
 	
-# Run main program.
+# Run main program
 if __name__ == "__main__" :
 	main()
 	
