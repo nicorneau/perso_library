@@ -48,7 +48,8 @@ Welcome to your personal library manager.
 	
 home = """
 What would you like to do?
-Choose one of the following options :
+Choose one of the following options
+by entering the corresponding number :
 """
 
 main_options = """
@@ -60,7 +61,7 @@ main_options = """
 """
 
 search = """
-Enter author's name, title or publication date of the book you are looking for.
+Enter book author, title and/or publication date.
 """
 
 empty = """
@@ -141,17 +142,14 @@ def find_book(books_list) :
 		print(search)
 		find = input("Search for : ")
 				
-		round = 1
-				
-		for book in books_list :
+		for i, book in enumerate(books_list) :
 					
 			temp = book.__str__()
 					
 			if find in temp :
 						
 				books_select.append(book)
-				print(round, ") ", book, sep = "")
-				round += 1
+				print(i + 1, ") ", book, sep = "")
 				
 		if len(books_select) == 0 :
 				
@@ -209,24 +207,22 @@ def mod_book(books_list) :
 					print("Add new informations :")
 					rep_book = add_book(books_list)
 				
-					round = 0	
-					for book in books_list :
+					for i, book in enumerate(books_list) :
 						
 						if book.__str__() == books_to_mod[0].__str__() :
 						
-							books_list[round] = rep_book
+							books_list[i] = rep_book
 						
 					print("The book has been correctly modified.")
 				
 				# Delete
 				elif mod_choice == 2 :
 					
-					round = 0	
-					for book in books_list :
+					for i, book in enumerate(books_list) :
 						
 						if book.__str__() == books_to_mod[0].__str__() :
 						
-							del books_list[round]
+							del books_list[i]
 							
 					print("The book has been correctly deleted.")
 							
@@ -270,7 +266,7 @@ def save_books(books_list) :
 	
 	exit = 0
 	
-	while exit is 0:
+	while exit == 0:
 	
 		print(save)
 		save_choice = eval(input("Your choice : "))
@@ -281,7 +277,7 @@ def save_books(books_list) :
 			pickle.dump(books_list, books_list_out)
 			books_list_out.close()
 			
-			print("Modifications saved.")
+			print("Modification(s) saved.")
 			
 			exit = 1
 			
