@@ -48,8 +48,9 @@ Welcome to your personal library manager.
 	
 home = """
 What would you like to do?
-Choose one of the following options
-by entering the corresponding number :
+Select one of the following
+options by entering the number
+corresponding to your choice :
 """
 
 main_options = """
@@ -57,7 +58,8 @@ main_options = """
 2) Add a book
 3) Modify/remove a book
 4) See all books
-5) Quit
+5) Clear personal library
+6) Quit
 """
 
 search = """
@@ -79,6 +81,13 @@ There are no results that match your search.
 mod_options = """
 1) Modify the book
 2) Remove the book
+3) Return to main menu
+"""
+
+del_options = """
+Are you sure you want to clear your personal library?
+1) Yes
+2) No
 """
 
 list_pres = """
@@ -225,7 +234,11 @@ def mod_book(books_list) :
 							del books_list[i]
 							
 					print("The book has been correctly deleted.")
-							
+					
+				elif mod_choice == 3 :
+				
+					pass
+				
 				# Error
 				else :
 					
@@ -258,6 +271,32 @@ def see_books(books_list) :
 				
 			print(book)
 
+
+# Clear personal library
+def clear_books(books_list) :
+	"""
+	This function clear the personal library
+	"""
+	print(del_options)
+	del_choice = input("Your choice : ")
+	
+	if del_choice == "1" :
+	
+		books_list = []
+		
+		print("Your personal library is now empty.")
+		
+	elif del_choice == "2" :
+	
+		pass
+		
+	else :
+	
+		print(error)
+		
+	return books_list
+	
+	
 # Save books list
 def save_books(books_list) :
 	"""
@@ -309,16 +348,15 @@ def main() :
 		print(home)
 		print(main_options)
 	
-		choice = eval(input("Your choice : "))
+		choice = input("Your choice : ")
 	
 		# 1) Find a book
-		if choice == 1 :
+		if choice == "1" :
 		
 			find_book(books_list)
-
 	
 		# 2) Add a book
-		elif choice == 2 :
+		elif choice == "2" :
 		
 			new_book = add_book(books_list)
 			
@@ -327,18 +365,22 @@ def main() :
 			print(new_book)
 		
 		# 3) Modify/remove a book
-		elif choice == 3 :
+		elif choice == "3" :
 		
 			# Add option empty books list
 			mod_book(books_list)
 			
 		# 4) See all books
-		elif choice == 4 :
+		elif choice == "4" :
 		
 			see_books(books_list)
+		# 5) Clear personal library
+		elif choice == "5" :
 		
-		# 5) Quit
-		elif choice == 5 :
+			books_list = clear_books(books_list)
+		
+		# 6) Quit
+		elif choice == "6" :
 			
 			save_books(books_list)
 			
