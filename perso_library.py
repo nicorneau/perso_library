@@ -170,7 +170,7 @@ def find_book(books_list) :
 # Add a book
 def add_book(books_list) :
 	"""
-	THis function adds a book to books list.
+	This function adds a book to books list.
 	"""
 
 	temp_author = input("Author : ")
@@ -374,6 +374,7 @@ def main() :
 		elif choice == "4" :
 		
 			see_books(books_list)
+			
 		# 5) Clear personal library
 		elif choice == "5" :
 		
